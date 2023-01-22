@@ -1,4 +1,3 @@
-import { taskList } from "./models";
 import { appNodes } from "./nodes";
 
 export function* idGen() {
@@ -19,16 +18,18 @@ export function createElement(elem) {
   return document.createElement(elem);
 }
 
-export function storeLocally() {
-  window.localStorage.setItem("taskList", JSON.stringify(taskList));
-}
-
 export function clearStorage() {
-  window.localStorage.removeItem("taskList");
+  window.localStorage.clear();
 }
 
 export function getStoredTasks() {
-  return JSON.parse(window.localStorage.getItem("taskList")) || [];
+  let storedTasksObject = { ...window.localStorage };
+  let storedTaskArray = Object.values(storedTasksObject);
+  let storedTask = [];
+  storedTaskArray.forEach((task) => {
+    storedTask.push(JSON.parse(task));
+  });
+  return storedTask || [];
 }
 
 export function showToDoContainer(boolean) {

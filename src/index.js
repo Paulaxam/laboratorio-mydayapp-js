@@ -1,7 +1,7 @@
 import "./css/base.css";
 import { Task, taskList } from "./js/models";
 import { appNodes } from "./js/nodes";
-import { newTaskCard, showToDoContainer, storeLocally } from "./js/utils";
+import { newTaskCard, showToDoContainer } from "./js/utils";
 
 window.addEventListener("load", () => {
   let numberOfTasks = taskList.length;
@@ -25,7 +25,6 @@ appNodes.mainInput.addEventListener("keydown", (e) => {
     } else {
       let newTask = new Task(text);
       newTask.addTask();
-      storeLocally();
       appNodes.clearMainInput();
       newTaskCard(newTask);
       showToDoContainer(true);

@@ -1,4 +1,4 @@
-import { idGenerator, storeLocally } from "./utils";
+import { idGenerator } from "./utils";
 import { getStoredTasks } from "./utils";
 
 export let taskList = getStoredTasks();
@@ -11,28 +11,22 @@ export class Task {
   }
 
   addTask() {
-    taskList.push({
+    let stringifyTask = JSON.stringify({
       id: this.id,
       title: this.title,
       completed: this.completed,
     });
+    console.log(stringifyTask);
+    window.localStorage.setItem(this.id, stringifyTask);
   }
 
   removeTask(id) {
-    const taskIndex = taskList.findIndex((element) => {
-      element.id === id;
-    });
-    taskList.splice(taskIndex, 1);
-    storeLocally();
+    window.localStorage.removeItem(id);
   }
 
   editTask(id, text) {
-    const taskIndex = taskList.findIndex((element) => {
-      element.id === id;
-    });
-    let newTask = taskList[taskIndex];
-    newTask.title = text;
-    taskList.splice(taskIndex, 1, newTask);
-    storeLocally();
+    let task = JSON.parse(window.localStorage.getItem(id));
+    task.title = text;
+    window.localStorage.setItem(id, JSON.stringify(task));
   }
 }
