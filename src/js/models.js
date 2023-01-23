@@ -16,12 +16,7 @@ export class Task {
       title: this.title,
       completed: this.completed,
     });
-    console.log(stringifyTask);
     window.localStorage.setItem(this.id, stringifyTask);
-  }
-
-  removeTask(id) {
-    window.localStorage.removeItem(id);
   }
 
   editTask(id, text) {

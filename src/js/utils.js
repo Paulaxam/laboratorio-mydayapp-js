@@ -1,7 +1,7 @@
 import { appNodes } from "./nodes";
 
 export function* idGen() {
-  let id = 1;
+  let id = Math.round(Math.random() * 1000);
   while (true) {
     yield id.toString();
     id++;
@@ -9,6 +9,12 @@ export function* idGen() {
 }
 
 export const idGenerator = idGen();
+
+export function renderTaskList(taskList) {
+  taskList.forEach((element) => {
+    newTaskCard(element);
+  });
+}
 
 export function domSelector(query) {
   return document.querySelector(query);
@@ -44,6 +50,7 @@ export function showToDoContainer(boolean) {
 
 export function newTaskCard(task) {
   const newLi = createElement("li");
+  newLi.id = `li${task.id}`;
   if (task.completed) {
     newLi.classList.add("completed");
   } //if isEditing newLi.classList.add("editing");
@@ -52,13 +59,17 @@ export function newTaskCard(task) {
   const newCheckboxImput = createElement("input");
   newCheckboxImput.type = "checkbox";
   newCheckboxImput.classList.add("toggle");
+  newCheckboxImput.id = `checkbox${task.id}`;
   const newLabel = createElement("label");
   newLabel.innerHTML = task.title;
+  newLabel.id = `label${task.id}`;
   const newRevomeBtn = createElement("button");
   newRevomeBtn.classList.add("destroy");
+  newRevomeBtn.id = `remove${task.id}`;
   const newInput = createElement("input");
   newInput.classList.add("edit");
   newInput.value = task.title;
+  newInput.id = `edit${task.id}`;
 
   appNodes.toDoList.appendChild(newLi);
   newLi.appendChild(newDiv);
@@ -66,4 +77,17 @@ export function newTaskCard(task) {
   newDiv.appendChild(newCheckboxImput);
   newDiv.appendChild(newLabel);
   newDiv.appendChild(newRevomeBtn);
+
+  //Event listeners
+  newRevomeBtn.addEventListener("click", () => {
+    let taskId = newRevomeBtn.id.slice(6);
+    window.localStorage.removeItem(taskId);
+    appNodes.toDoList.innerHTML = "";
+    let newTaskList = getStoredTasks();
+    renderTaskList(newTaskList);
+  });
+
+  newCheckboxImput.addEventListener("click", (e) => {
+    console.log(e);
+  });
 }

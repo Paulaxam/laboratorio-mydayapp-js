@@ -1,16 +1,14 @@
 import "./css/base.css";
 import { Task, taskList } from "./js/models";
 import { appNodes } from "./js/nodes";
-import { newTaskCard, showToDoContainer } from "./js/utils";
+import { newTaskCard, renderTaskList, showToDoContainer } from "./js/utils";
 
 window.addEventListener("load", () => {
   let numberOfTasks = taskList.length;
   if (!numberOfTasks) {
     showToDoContainer(false);
   } else {
-    taskList.forEach((element) => {
-      newTaskCard(element);
-    });
+    renderTaskList(taskList);
   }
 
   console.log(taskList);
