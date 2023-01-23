@@ -2,6 +2,7 @@ import "./css/base.css";
 import { Task, taskList } from "./js/models";
 import { appNodes } from "./js/nodes";
 import {
+  getStoredTasks,
   newTaskCard,
   renderTaskList,
   showToDoContainer,
@@ -36,4 +37,17 @@ appNodes.mainInput.addEventListener("keydown", (e) => {
   if (keydown === 27) {
     appNodes.clearMainInput();
   }
+});
+
+appNodes.clearBtn.addEventListener("click", () => {
+  let taskList = getStoredTasks();
+  taskList.forEach((task) => {
+    if (task.completed) {
+      window.localStorage.removeItem(task.id);
+    }
+  });
+  appNodes.toDoList.innerHTML = "";
+  let newTaskList = getStoredTasks();
+  newTaskList.length ? renderTaskList(newTaskList) : showToDoContainer(false);
+  taskCounter();
 });

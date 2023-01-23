@@ -10,4 +10,5 @@ export const appNodes = {
   toDoContainer: domSelector(".todoapp-wrapper"),
   toDoList: domSelector(".todo-list"),
   counter: domSelector("#counter"),
+  clearBtn: domSelector(".clear-completed"),
 };
