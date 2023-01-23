@@ -9,4 +9,5 @@ export const appNodes = {
   footer: domSelector(".footer"),
   toDoContainer: domSelector(".todoapp-wrapper"),
   toDoList: domSelector(".todo-list"),
+  counter: domSelector("#counter"),
 };

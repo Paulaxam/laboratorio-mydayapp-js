@@ -10,6 +10,12 @@ export function* idGen() {
 
 export const idGenerator = idGen();
 
+export function taskCounter(boolean) {
+  let total = Number(appNodes.counter.innerHTML);
+  boolean ? total++ : total--;
+  appNodes.counter.innerHTML = total;
+}
+
 export function renderTaskList(taskList) {
   taskList.forEach((element) => {
     newTaskCard(element);
@@ -32,11 +38,9 @@ export function completedTaskToggle(id) {
   let task = JSON.parse(window.localStorage.getItem(id));
   if (task.completed === false) {
     task.completed = true;
-    console.log(task);
     window.localStorage.setItem(id, JSON.stringify(task));
   } else {
     task.completed = false;
-    console.log(task);
     window.localStorage.setItem(id, JSON.stringify(task));
   }
 }
@@ -101,13 +105,36 @@ export function newTaskCard(task) {
     newTaskList.length ? renderTaskList(newTaskList) : showToDoContainer(false);
   });
 
-  newCheckboxImput.addEventListener("click", (e) => {
+  newCheckboxImput.addEventListener("click", () => {
     let taskId = newCheckboxImput.id.slice(8);
     newLi.classList.toggle("completed");
     completedTaskToggle(taskId);
   });
 
-  newLabel.addEventListener("dblclick", (e) => {
-    console.log(e);
+  newLabel.addEventListener("dblclick", () => {
+    let taskId = newLabel.id.slice(5);
+    newLi.classList.add("editing");
+    newInput.addEventListener("keydown", (e) => {
+      let keydown = e.keyCode;
+      let text = newInput.value.trim();
+      let labelTxt = newLabel.innerHTML;
+      let task = JSON.parse(window.localStorage.getItem(taskId));
+      console.log(labelTxt);
+      if (keydown === 13) {
+        if (text === labelTxt || text === "") {
+          newLi.classList.remove("editing");
+        } else {
+          task.title = text;
+          newInput.value = text;
+          labelTxt = text;
+          newLabel.innerHTML = labelTxt;
+          window.localStorage.setItem(taskId, JSON.stringify(task));
+          newLi.classList.remove("editing");
+        }
+      }
+      if (keydown === 27) {
+        newLi.classList.remove("editing");
+      }
+    });
   });
 }
