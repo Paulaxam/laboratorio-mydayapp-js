@@ -28,6 +28,19 @@ export function clearStorage() {
   window.localStorage.clear();
 }
 
+export function completedTaskToggle(id) {
+  let task = JSON.parse(window.localStorage.getItem(id));
+  if (task.completed === false) {
+    task.completed = true;
+    console.log(task);
+    window.localStorage.setItem(id, JSON.stringify(task));
+  } else {
+    task.completed = false;
+    console.log(task);
+    window.localStorage.setItem(id, JSON.stringify(task));
+  }
+}
+
 export function getStoredTasks() {
   let storedTasksObject = { ...window.localStorage };
   let storedTaskArray = Object.values(storedTasksObject);
@@ -51,9 +64,6 @@ export function showToDoContainer(boolean) {
 export function newTaskCard(task) {
   const newLi = createElement("li");
   newLi.id = `li${task.id}`;
-  if (task.completed) {
-    newLi.classList.add("completed");
-  } //if isEditing newLi.classList.add("editing");
   const newDiv = createElement("div");
   newDiv.classList.add("view");
   const newCheckboxImput = createElement("input");
@@ -70,6 +80,10 @@ export function newTaskCard(task) {
   newInput.classList.add("edit");
   newInput.value = task.title;
   newInput.id = `edit${task.id}`;
+  if (task.completed) {
+    newLi.classList.add("completed");
+    newCheckboxImput.checked = "checked";
+  } //if isEditing newLi.classList.add("editing");
 
   appNodes.toDoList.appendChild(newLi);
   newLi.appendChild(newDiv);
@@ -84,10 +98,16 @@ export function newTaskCard(task) {
     window.localStorage.removeItem(taskId);
     appNodes.toDoList.innerHTML = "";
     let newTaskList = getStoredTasks();
-    renderTaskList(newTaskList);
+    newTaskList.length ? renderTaskList(newTaskList) : showToDoContainer(false);
   });
 
   newCheckboxImput.addEventListener("click", (e) => {
+    let taskId = newCheckboxImput.id.slice(8);
+    newLi.classList.toggle("completed");
+    completedTaskToggle(taskId);
+  });
+
+  newLabel.addEventListener("dblclick", (e) => {
     console.log(e);
   });
 }
