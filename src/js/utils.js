@@ -10,10 +10,15 @@ export function* idGen() {
 
 export const idGenerator = idGen();
 
-export function taskCounter(boolean) {
-  let total = Number(appNodes.counter.innerHTML);
-  boolean ? total++ : total--;
-  appNodes.counter.innerHTML = total;
+export function taskCounter() {
+  let taskList = getStoredTasks();
+  let couter = 0;
+  taskList.forEach((task) => {
+    if (!task.completed) {
+      couter++;
+    }
+    appNodes.counter.innerHTML = couter;
+  });
 }
 
 export function renderTaskList(taskList) {
@@ -103,12 +108,14 @@ export function newTaskCard(task) {
     appNodes.toDoList.innerHTML = "";
     let newTaskList = getStoredTasks();
     newTaskList.length ? renderTaskList(newTaskList) : showToDoContainer(false);
+    taskCounter();
   });
 
   newCheckboxImput.addEventListener("click", () => {
     let taskId = newCheckboxImput.id.slice(8);
     newLi.classList.toggle("completed");
     completedTaskToggle(taskId);
+    taskCounter();
   });
 
   newLabel.addEventListener("dblclick", () => {

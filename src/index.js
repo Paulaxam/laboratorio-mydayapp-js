@@ -1,7 +1,12 @@
 import "./css/base.css";
 import { Task, taskList } from "./js/models";
 import { appNodes } from "./js/nodes";
-import { newTaskCard, renderTaskList, showToDoContainer } from "./js/utils";
+import {
+  newTaskCard,
+  renderTaskList,
+  showToDoContainer,
+  taskCounter,
+} from "./js/utils";
 
 window.addEventListener("load", () => {
   let numberOfTasks = taskList.length;
@@ -9,9 +14,8 @@ window.addEventListener("load", () => {
     showToDoContainer(false);
   } else {
     renderTaskList(taskList);
+    taskCounter();
   }
-
-  console.log(taskList);
 });
 
 appNodes.mainInput.addEventListener("keydown", (e) => {
@@ -26,6 +30,7 @@ appNodes.mainInput.addEventListener("keydown", (e) => {
       appNodes.clearMainInput();
       newTaskCard(newTask);
       showToDoContainer(true);
+      taskCounter();
     }
   }
   if (keydown === 27) {

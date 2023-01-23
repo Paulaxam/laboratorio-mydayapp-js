@@ -18,10 +18,4 @@ export class Task {
     });
     window.localStorage.setItem(this.id, stringifyTask);
   }
-
-  editTask(id, text) {
-    let task = JSON.parse(window.localStorage.getItem(id));
-    task.title = text;
-    window.localStorage.setItem(id, JSON.stringify(task));
-  }
 }
