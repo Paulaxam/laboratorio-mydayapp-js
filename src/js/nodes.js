@@ -11,4 +11,7 @@ export const appNodes = {
   toDoList: domSelector(".todo-list"),
   counter: domSelector("#counter"),
   clearBtn: domSelector(".clear-completed"),
+  all: domSelector("#all"),
+  pending: domSelector("#pending"),
+  completed: domSelector("#completed"),
 };

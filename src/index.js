@@ -8,6 +8,7 @@ import {
   showToDoContainer,
   taskCounter,
 } from "./js/utils";
+import { navegator } from "./js/navegation";
 
 window.addEventListener("load", () => {
   let numberOfTasks = taskList.length;
@@ -18,6 +19,9 @@ window.addEventListener("load", () => {
     taskCounter();
   }
 });
+
+window.addEventListener("load", navegator, false);
+window.addEventListener("hashchange", navegator, false);
 
 appNodes.mainInput.addEventListener("keydown", (e) => {
   let keydown = e.keyCode;
