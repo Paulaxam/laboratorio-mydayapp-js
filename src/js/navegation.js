@@ -9,8 +9,6 @@ export function navegator() {
   if (hash.startsWith("#/pending")) {
     let pendingTasks = [];
     appNodes.all.classList.remove("selected");
-    appNodes.completed.classList.remove("selected");
-    appNodes.pending.classList.add("selected");
     taskList.forEach((task) => {
       if (!task.completed) {
         pendingTasks.push(task);

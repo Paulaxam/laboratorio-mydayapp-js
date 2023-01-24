@@ -99,9 +99,14 @@ export function showToDoContainer(boolean) {
     ? appNodes.footer.classList.remove("hidden")
     : appNodes.footer.classList.add("hidden");
 
-  if (!boolean) {
-    showClearCompletedBtn(false);
-  }
+  let tasks = getStoredTasks();
+  let i = 0;
+  tasks.forEach((task) => {
+    if (task.completed) {
+      i++;
+    }
+  });
+  i ? showClearCompletedBtn(true) : showClearCompletedBtn(false);
 }
 
 export function newTaskCard(task) {
