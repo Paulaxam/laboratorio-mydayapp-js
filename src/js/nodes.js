@@ -4,6 +4,8 @@ export const appNodes = {
   mainInput: domSelector(".new-todo"),
   clearMainInput: () => {
     appNodes.mainInput.value = "";
+    appNodes.mainInput.removeAttribute("placeholder");
+    appNodes.mainInput.setAttribute("autofocus", "autofocus");
   },
   main: domSelector("#main"),
   footer: domSelector("#footer"),
