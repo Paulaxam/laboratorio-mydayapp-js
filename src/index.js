@@ -6,6 +6,7 @@ import {
   newTaskCard,
   renderTaskList,
   saveLikeMyApp,
+  showClearCompletedBtn,
   showToDoContainer,
   taskCounter,
 } from "./js/utils";
@@ -58,4 +59,5 @@ appNodes.clearBtn.addEventListener("click", () => {
   newTaskList.length ? renderTaskList(newTaskList) : showToDoContainer(false);
   taskCounter();
   saveLikeMyApp();
+  showClearCompletedBtn(false);
 });

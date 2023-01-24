@@ -10,6 +10,12 @@ export function* idGen() {
 
 export const idGenerator = idGen();
 
+export function showClearCompletedBtn(boolean) {
+  boolean
+    ? appNodes.clearBtn.classList.remove("hidden")
+    : appNodes.clearBtn.classList.add("hidden");
+}
+
 export function taskCounter() {
   let taskList = getStoredTasks();
   let counter = 0;
@@ -27,9 +33,14 @@ export function taskCounter() {
 }
 
 export function renderTaskList(taskList) {
+  let i = 0;
   taskList.forEach((element) => {
     newTaskCard(element);
+    if (element.completed === true) {
+      i++;
+    }
   });
+  showClearCompletedBtn(i);
 }
 
 export function domSelector(query) {
@@ -53,13 +64,20 @@ export function completedTaskToggle(id) {
     task.completed = false;
     window.localStorage.setItem(id, JSON.stringify(task));
   }
+  let taskList = getStoredTasks();
+  let i = 0;
+  taskList.forEach((element) => {
+    if (element.completed === true) {
+      i++;
+    }
+  });
+  showClearCompletedBtn(i);
 }
 
 export function getStoredTasks() {
   let storedTasksObject = { ...window.localStorage };
   let storedTaskArray = Object.values(storedTasksObject);
   storedTaskArray.pop();
-  console.log(storedTaskArray);
   let storedTask = [];
   storedTaskArray.forEach((task) => {
     storedTask.push(JSON.parse(task));
