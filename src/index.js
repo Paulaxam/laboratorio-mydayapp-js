@@ -5,6 +5,7 @@ import {
   getStoredTasks,
   newTaskCard,
   renderTaskList,
+  saveLikeMyApp,
   showToDoContainer,
   taskCounter,
 } from "./js/utils";
@@ -17,6 +18,7 @@ window.addEventListener("load", () => {
   } else {
     renderTaskList(taskList);
     taskCounter();
+    saveLikeMyApp();
   }
 });
 
@@ -36,6 +38,7 @@ appNodes.mainInput.addEventListener("keydown", (e) => {
       newTaskCard(newTask);
       showToDoContainer(true);
       taskCounter();
+      saveLikeMyApp();
     }
   }
   if (keydown === 27) {
@@ -54,4 +57,5 @@ appNodes.clearBtn.addEventListener("click", () => {
   let newTaskList = getStoredTasks();
   newTaskList.length ? renderTaskList(newTaskList) : showToDoContainer(false);
   taskCounter();
+  saveLikeMyApp();
 });

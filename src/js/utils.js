@@ -53,11 +53,18 @@ export function completedTaskToggle(id) {
 export function getStoredTasks() {
   let storedTasksObject = { ...window.localStorage };
   let storedTaskArray = Object.values(storedTasksObject);
+  storedTaskArray.pop();
+  console.log(storedTaskArray);
   let storedTask = [];
   storedTaskArray.forEach((task) => {
     storedTask.push(JSON.parse(task));
   });
   return storedTask || [];
+}
+
+export function saveLikeMyApp() {
+  let storedTasks = getStoredTasks();
+  window.localStorage.setItem("mydayapp-js", JSON.stringify(storedTasks));
 }
 
 export function showToDoContainer(boolean) {
@@ -109,6 +116,7 @@ export function newTaskCard(task) {
     let newTaskList = getStoredTasks();
     newTaskList.length ? renderTaskList(newTaskList) : showToDoContainer(false);
     taskCounter();
+    saveLikeMyApp();
   });
 
   newCheckboxImput.addEventListener("click", () => {
@@ -116,6 +124,7 @@ export function newTaskCard(task) {
     newLi.classList.toggle("completed");
     completedTaskToggle(taskId);
     taskCounter();
+    saveLikeMyApp();
   });
 
   newLabel.addEventListener("dblclick", () => {
@@ -137,6 +146,7 @@ export function newTaskCard(task) {
           newLabel.innerHTML = labelTxt;
           window.localStorage.setItem(taskId, JSON.stringify(task));
           newLi.classList.remove("editing");
+          saveLikeMyApp();
         }
       }
       if (keydown === 27) {

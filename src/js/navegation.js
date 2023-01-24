@@ -6,9 +6,11 @@ export let url = window.location;
 export function navegator() {
   let hash = url.hash;
   let taskList = getStoredTasks();
-  console.log(window.location.hash);
   if (hash.startsWith("#/pending")) {
     let pendingTasks = [];
+    appNodes.all.classList.remove("selected");
+    appNodes.completed.classList.remove("selected");
+    appNodes.pending.classList.add("selected");
     taskList.forEach((task) => {
       if (!task.completed) {
         pendingTasks.push(task);
@@ -18,6 +20,9 @@ export function navegator() {
     renderTaskList(pendingTasks);
   } else if (hash.startsWith("#/completed")) {
     let completedTasks = [];
+    appNodes.all.classList.remove("selected");
+    appNodes.completed.classList.add("selected");
+    appNodes.pending.classList.remove("selected");
     taskList.forEach((task) => {
       if (task.completed) {
         completedTasks.push(task);
@@ -26,6 +31,9 @@ export function navegator() {
     appNodes.toDoList.innerHTML = "";
     renderTaskList(completedTasks);
   } else if (hash.startsWith("#/")) {
+    appNodes.all.classList.add("selected");
+    appNodes.completed.classList.remove("selected");
+    appNodes.pending.classList.remove("selected");
     appNodes.toDoList.innerHTML = "";
     renderTaskList(taskList);
   }
