@@ -12,13 +12,18 @@ export const idGenerator = idGen();
 
 export function taskCounter() {
   let taskList = getStoredTasks();
-  let couter = 0;
+  let counter = 0;
   taskList.forEach((task) => {
     if (!task.completed) {
-      couter++;
+      counter++;
     }
-    appNodes.counter.innerHTML = couter;
   });
+  if (counter === 1) {
+    appNodes.itemCounter.innerHTML = "item";
+  } else {
+    appNodes.itemCounter.innerHTML = "items";
+  }
+  appNodes.counter.innerHTML = counter;
 }
 
 export function renderTaskList(taskList) {

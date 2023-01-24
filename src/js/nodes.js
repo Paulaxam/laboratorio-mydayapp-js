@@ -14,4 +14,5 @@ export const appNodes = {
   all: domSelector("#all"),
   pending: domSelector("#pending"),
   completed: domSelector("#completed"),
+  itemCounter: domSelector("#item"),
 };
